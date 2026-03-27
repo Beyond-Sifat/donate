@@ -13,6 +13,7 @@ const Navbar = () => {
         <Link to="/" className="hover:text-indigo-600">Home</Link>
         <Link to="/donate" className="hover:text-indigo-600">Donate</Link>
         <Link to="/about" className="hover:text-indigo-600">About</Link>
+        <Link to="register" className="hover:text-indigo-600">Register</Link>
         <Link to="/login" className="bg-indigo-600 text-white px-4 py-1 rounded hover:bg-indigo-700">
           Login
         </Link>

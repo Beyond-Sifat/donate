@@ -8,49 +8,44 @@ const Register = () => {
         password: ""
     })
 
-    const [errors, setErrors] = useState();
+    const [errors, setErrors] = useState("");
+    // console.log(errors);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const validate = () => {
-        let newErrors = {};
 
-        if (!formData.name.trim()) {
-            newErrors.name = "Name is required";
+        if (!formData.name || !formData.email || !formData.password) {
+            return "All fields are required";
+        }
+        if (!formData.email.includes("@")) {
+            return "Invalid email";
+        }
+        // if (!formData.email) {
+        //     return "Email is required";
+        // } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        //     return "Invalid email format";
+        // }
+
+        if (formData.password.length < 6) {
+            return "Password must be at least 6 characters";
         }
 
-        if (!formData.email) {
-            newErrors.email = "Email is required";
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            newErrors.email = "Invalid email format";
-        }
-
-        if (!formData.password) {
-            newErrors.password = "Password is required";
-        } else if (formData.password.length < 6) {
-            newErrors.password = "Password must be at least 6 characters";
-        }
-
-        return newErrors;
+        return "";
     };
 
     // handle submit
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setErrors("");
         const validationErrors = validate();
 
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
+        if (validationErrors) {
+            return setErrors(validationErrors);
         } else {
-            setErrors({});
+            setErrors("");
             console.log("Form Data:", formData);
         }
     };
@@ -62,6 +57,7 @@ const Register = () => {
                 className="bg-white shadow-md p-6 rounded w-[300px]"
             >
                 <h2 className="text-xl font-bold mb-4 text-center">Simple Form</h2>
+                {errors && <p className="text-red-500 text-sm mb-2">{errors}</p>}
 
                 {/* Name */}
                 <input
@@ -72,9 +68,9 @@ const Register = () => {
                     value={formData.name}
                     onChange={handleChange}
                 />
-                {errors.name && (
+                {/* {errors && (
                     <p className="text-red-500 text-sm mb-2">{errors.name}</p>
-                )}
+                )} */}
 
                 {/* Email */}
                 <input
@@ -85,9 +81,9 @@ const Register = () => {
                     value={formData.email}
                     onChange={handleChange}
                 />
-                {errors.email && (
+                {/* {errors.email && (
                     <p className="text-red-500 text-sm mb-2">{errors.email}</p>
-                )}
+                )} */}
 
                 {/* Password */}
                 <input
@@ -98,15 +94,15 @@ const Register = () => {
                     value={formData.password}
                     onChange={handleChange}
                 />
-                {errors.password && (
+                {/* {errors.password && (
                     <p className="text-red-500 text-sm mb-3">{errors.password}</p>
-                )}
+                )} */}
 
                 <button
-                    type="submit"
+                    //type="submit"
                     className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
                 >
-                    Submit
+                    Register
                 </button>
             </form>
         </div>
